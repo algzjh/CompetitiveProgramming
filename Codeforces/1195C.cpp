@@ -1,3 +1,34 @@
+// After contest submission
+#include <bits/stdc++.h>
+#define mk make_pair
+#define fi first
+#define se second
+using namespace std;
+typedef long long LL;
+typedef pair<int, int> PII;
+const int MAXN = 1e5 + 5;
+int h[MAXN][2];
+LL dp[MAXN][2];
+
+int main(){
+    int n;
+    scanf("%d", &n);
+    for(int j = 0; j < 2; ++j){
+        for(int i = 1; i <= n; ++i){
+            scanf("%d", &h[i][j]);
+        }
+    }
+    for(int i = 1; i <= n; ++i){
+        for(int j = 0; j < 2; ++j){
+            dp[i][j] = max(dp[i - 1][j], dp[i - 1][j^1] + h[i][j]);
+        }
+    }
+    printf("%lld\n", max(dp[n][0], dp[n][1]));
+    return 0;
+}
+
+/*
+// On Contest Submission
 #include <bits/stdc++.h>
 #define mk make_pair
 #define fi first
@@ -60,3 +91,4 @@ int main(){
     printf("%lld\n", ans);
     return 0;
 }
+*/
