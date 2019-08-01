@@ -7,8 +7,6 @@ typedef long long LL;
 typedef pair<int, int> PII;
 const int MAXN = 55;
 const int MAXM = 5e5 + 5;
-const int MOD = 998244353;
-const int INF = 0x3f3f3f3f;
 char s[MAXN];
 int a[MAXN][MAXN], sum[MAXN][MAXN];
 int dp[MAXN][MAXN][MAXN][MAXN];
