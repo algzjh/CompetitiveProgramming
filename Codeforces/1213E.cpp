@@ -6,7 +6,7 @@ using namespace std;
 typedef long long LL;
 typedef pair<int, int> PII;
 const int MAXN = 2e5 + 5;
-const int MAXM = 1e4 + 5;
+const int MAXM = 2e5 + 5;
 const int MOD = 998244353;
 const int INF = 0x3f3f3f3f;
 char s[10], t[10], p[10], tp[10];
