@@ -4,7 +4,6 @@
 #define mk make_pair
 using namespace std;
 typedef long long LL;
-typedef pair<int, int> PII;
 const int MAXN = 2e3 + 5;
 const int INF = 0x3f3f3f3f;
 int a[MAXN], b[MAXN * 2];
