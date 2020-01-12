@@ -16,24 +16,20 @@ int solve(vector <int> &v, int bit){
     if(bit < 0)  return 0;
     vector <int> t0, t1;
     for(auto &i : v){
-        if(((i>>bit)&1) == 0)  t0.emplace_back(i);
-        else t1.emplace_back(i);
+        if((i >> bit) & 1) t1.emplace_back(i);
+        else t0.emplace_back(i);
     }
-    if(t0.size() == 0)  return solve(t1, bit - 1);
-    if(t1.size() == 0)  return solve(t0, bit - 1);
+    if(t0.empty())  return solve(t1, bit - 1);
+    if(t1.empty())  return solve(t0, bit - 1);
     return min(solve(t0, bit - 1), solve(t1, bit - 1)) + (1 << bit);
 }
 
 int main(){
     scanf("%d", &n);
-    int x;
-    for(int i = 1; i <= n; ++i){
-        scanf("%d", &x);
-        a.emplace_back(x);
+    a.resize(n);
+    for(int i = 0; i < n; ++i){
+        scanf("%d", &a[i]);
     }
-    printf("%d\n", solve(a, 30));
+    printf("%d\n", solve(a, 29));
     return 0;
 }
-/*
-3 4 6 7
- */
