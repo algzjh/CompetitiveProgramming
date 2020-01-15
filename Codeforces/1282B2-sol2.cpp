@@ -11,28 +11,26 @@
 #define se second
 #define mk make_pair
 using namespace std;
-const int MAXN = static_cast<const int>(2e3 + 5);
+const int MAXN = static_cast<const int>(2e5 + 5);
 const int MAXM = static_cast<const int>(2e5 + 5);
 const int MOD = static_cast<const int>(1e9 + 7);
 const int INF = 0x3f3f3f3f;
 typedef long long LL;
 typedef pair<int, int> PII;
-int n, p[MAXN], c[MAXN], a[MAXN];
-vector<int> E[MAXN];
+int a[MAXN];
  
 int main() {
     int cntTest;
-    cin >> cntTest;
+    scanf("%d", &cntTest);
     for (int test = 0; test < cntTest; test++) {
         int n, p, k;
-        cin >> n >> p >> k;
+        scanf("%d%d%d", &n, &p, &k);
         int pref = 0;
         int ans = 0;
-        vector<int> a(n);
         for (int i = 0; i < n; i++) {
-            cin >> a[i];
+            scanf("%d", &a[i]);
         }
-        sort(a.begin(), a.end());
+        sort(a, a + n);
         for (int i = 0; i <= k; i++) {
             int sum = pref;
             if (sum > p) break;
@@ -48,7 +46,7 @@ int main() {
             pref += a[i];
             ans = max(ans, cnt);
         }
-        cout << ans << "\n";
+        printf("%d\n", ans);
     }
 }
 /*
