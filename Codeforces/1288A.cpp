@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+#define fi first
+#define se second
+#define mk make_pair
+using namespace std;
+const int MAXN = static_cast<const int>(2e5 + 5);
+const int MAXM = static_cast<const int>(2e5 + 5);
+const int MOD = static_cast<const int>(1e9 + 7);
+const int INF = 0x3f3f3f3f;
+typedef long long LL;
+typedef pair<int, int> PII;
+int n, d;
+ 
+int calc(int x){
+    return x + ceil(1.0 * d/(x+1));
+}
+ 
+int main() {
+    int _;
+    scanf("%d", &_);
+    while(_--){
+        scanf("%d%d", &n, &d);
+        int opt_x = int(sqrt(d));
+        bool flag = false;
+        for(int i = max(0, opt_x - 100); i <= min(int(1e9), opt_x + 100); ++i){
+            if(calc(i) <= n){
+                flag = true;
+                break;
+            }
+        }
+        printf("%s\n",flag?"YES":"NO");
+    }
+    return 0;
+}
+/*
+*/
