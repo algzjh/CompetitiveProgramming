@@ -1,67 +1,69 @@
 # include <bits/stdc++.h>
+# include <unordered_map>
 # define fi first
 # define se second
 # define mk make_pair
 using namespace std;
 const int MAXN = 5e3 + 5;
+const int MAXM = 5e3 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 typedef long long LL;
 typedef pair<int, int> PII;
-vector<int> G[MAXN];
-int n, m, p[MAXN][MAXN];
-vector<PII> edge;
-map<PII, int> f;
+int n, m;
+int head[MAXN], tot;
+int dep[MAXN], pa[MAXN], f[MAXN];
+
+
+struct Edge{
+    int from, to, nxt;
+    Edge(){}
+    Edge(int _from, int _to): from(_from), to(_to){}
+}e[MAXM * 2];
 
 
 struct Query{
     int u, v, g;
-}q[MAXN];
+}q[MAXM];
 
-void init(){
-    for(int i = 1; i <= n; ++i){
-        G[i].clear();
-    }
-    f.clear();
-    edge.clear();
+void addEdge(int u, int v){
+    e[tot].from = u; e[tot].to = v;
+    e[tot].nxt = head[u]; head[u] = tot++;
 }
 
-
-void dfs1(int r, int u, int fa){
-    for(auto v : G[u]){
-        if(v == fa) continue;
-        p[r][v] = u;
-        dfs1(r, v, u);
+void dfs(int u, int fa){
+    f[u] = 0;
+    dep[u] = dep[fa] + 1;
+    pa[u] = fa;
+    for(int i = head[u]; i != -1; i = e[i].nxt){
+        int v = e[i].to;
+        if(v != fa)  dfs(v, u);
     }
 }
 
 
-void solve(int u, int v, int g){
-    int fa, son = v;
-    do{
-        fa = p[u][son];
-        f[mk(min(fa, son),max(fa, son))] = max(f[mk(min(fa, son),max(fa, son))], g);
-        son = fa;
-    }while(fa != u);
+void update(int u, int v, int g){
+    while(u != v){
+        if(dep[v] < dep[u])  swap(u, v);
+        f[v] = max(f[v], g);
+        v = pa[v];
+    }
 }
-
 
 int getMi(int u, int v){
     int mi = 1000000;
-    int fa, son = v;
-    do{
-        fa = p[u][son];
-        mi = min(mi, f[mk(min(fa, son),max(fa, son))]);
-        son = fa;
-    }while(fa != u);
+    while(u != v){
+        if(dep[v] < dep[u])  swap(u, v);
+        mi = min(mi, f[v]);
+        v = pa[v];
+    }
     return mi;
 }
 
 bool check(){
     bool flag = true;
     for(int i = 1; i <= m; ++i){
-        int mi = getMi(q[i].u, q[i].v);
-        if(mi != q[i].g){
+        if(getMi(q[i].u, q[i].v) != q[i].g){
             flag = false;
             break;
         }
@@ -69,37 +71,36 @@ bool check(){
     return flag;
 }
 
-
+void init(){
+    tot = 0;
+    for(int i = 1; i <= n; ++i){
+        head[i] = -1;
+    }
+    dep[0] = 0;
+}
 
 int main(){
     scanf("%d", &n);
     init();
-    int u, v, g;
-    for(int i = 1; i <= n - 1; ++i){
+    int u, v;
+    for(int i = 0; i < n - 1; ++i){
         scanf("%d%d", &u, &v);
-        if(u > v)  swap(u, v);
-        G[u].emplace_back(v);
-        G[v].emplace_back(u);
-        f[mk(u, v)] = 0;
-        edge.emplace_back(mk(u, v));
+        addEdge(u, v);
+        addEdge(v, u);
     }
-    for(int i = 1; i <= n; ++i){
-        dfs1(i, i, 0);
-    }
+    dfs(1, 0);
     scanf("%d", &m);
     for(int i = 1; i <= m; ++i){
         scanf("%d%d%d", &q[i].u, &q[i].v, &q[i].g);
-        solve(q[i].u, q[i].v, q[i].g);
-    }
-    for(int i = 0; i < n - 1; ++i){
-        if(f[mk(edge[i].fi, edge[i].se)] == 0){
-            f[mk(edge[i].fi, edge[i].se)] = 1000000;
-        }
+        update(q[i].u, q[i].v, q[i].g);
     }
     if(check()){
         for(int i = 0; i < n - 1; ++i){
             if(i != 0)  printf(" ");
-            printf("%d", f[mk(edge[i].fi, edge[i].se)]);
+            u = e[2 * i].from;
+            v = e[2 * i].to;
+            if(dep[v] < dep[u])  swap(u, v);
+            printf("%d", f[v] == 0 ? 1000000 : f[v]);
         }
         printf("\n");
     }else{
