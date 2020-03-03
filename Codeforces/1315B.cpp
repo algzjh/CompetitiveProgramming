@@ -22,14 +22,12 @@ int main(){
         int n = strlen(s + 1);
         int money = 0, now = n;
         while(now > 1){
-            int p = now - 1;
-            while(p - 1 >= 1 and s[p - 1] == s[p])  --p;
-            if(s[p] == 'A')  money += a;
+            int pos = now - 1;
+            if(s[pos] == 'A')  money += a;
             else money += b;
-            if(money > p){
-                break;
-            }
-            now = p;
+            if(money > p)  break;
+            while(pos - 1 >= 1 and s[pos - 1] == s[pos])  --pos;
+            now = pos;
         }
         printf("%d\n", now);
     }
