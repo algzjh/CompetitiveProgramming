@@ -8,7 +8,6 @@ const int MAXN = 1e5 + 5;
 const int MAXM = 5e3 + 5;
 const int MOD = 1e9 + 7;
 const LL INF = 1e18;
-typedef long long LL;
 typedef pair<double, int> PDI;
 
 
