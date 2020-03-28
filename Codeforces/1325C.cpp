@@ -18,16 +18,19 @@ int main() {
         G[v].emplace_back(Edge{u, i});
         ans[i] = -1;
     }
+    bool flag = false;
     for(int i = 1; i <= n; ++i){
         if(G[i].size() >= 3){
             for(int j = 0; j < 3; ++j){
                 int id = G[i][j].id;
                 ans[id] = j;
             }
+            flag = true;
             break;
         }
     }
-    int now = 3;
+    int now = 0;
+    if(flag)  now = 3;
     for(int i = 1; i <= n - 1; ++i){
         if(ans[i] == -1){
             ans[i] = now;
