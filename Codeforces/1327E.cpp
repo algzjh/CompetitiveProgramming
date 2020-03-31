@@ -7,7 +7,7 @@ const int MOD = 998244353;
 
 LL qpow(LL a, LL b){
     LL res = 1;
-    while(b){
+    while(b > 0){
         if(b&1)  res = res * a % MOD;
         a = a * a % MOD;
         b >>= 1;
