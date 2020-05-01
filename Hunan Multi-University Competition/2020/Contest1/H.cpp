@@ -28,11 +28,13 @@ void dfs(int u, int fa){
             nd[u].v[1] = max_id + 1;
             ++max_id;
             nd[fa].p = 0;
+            nd[u].p = 0;
         }else{
             nd[u].v[0] = nd[fa].v[1];
             nd[u].v[1] = max_id + 1;
             ++max_id;
             nd[fa].p = 1;
+            nd[u].p = 0;
         }
     }
     for(auto v : G[u]){
@@ -42,20 +44,19 @@ void dfs(int u, int fa){
 }
 
 
-void init(){
+void init(int n){
     max_id = 0;
+    for(int i = 1; i <= n; ++i){
+        nd[i].p = -1;
+    }
 }
 
 
 int main(){
     int n;
     scanf("%d", &n);
-    init();
+    init(n);
     int u, v;
-    for(int i = 1; i <= n; ++i){
-        nd[i].v[0] = nd[i].v[1] = 0;
-        nd[i].p = -1;
-    }
     for(int i = 1; i <= n - 1; ++i){
         scanf("%d%d", &u, &v);
         G[u].emplace_back(v);
@@ -91,4 +92,8 @@ int main(){
 7 12
 7 13
 7 14
+
+3
+1 2
+2 3
 */
