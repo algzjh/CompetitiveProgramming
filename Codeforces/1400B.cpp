@@ -1,7 +1,7 @@
 /*
  * Author: algzjh
  * Date: 28/8/2020
- * Comment: greedy
+ * Comment: greedy, math, 1700
  */
 #include <bits/stdc++.h>
 #define mk make_pair
@@ -23,41 +23,34 @@ int main(){
         int p, f, cs, cw, s, w;
         scanf("%d%d%d%d%d%d", &p, &f, &cs, &cw, &s, &w);
         int ans = 0;
+        if(s > w){
+            swap(s, w);
+            swap(cs, cw);
+        }
         for(int i = 0; i <= min(p/s, cs); ++i){
-            int tans = i, rp = p, rf = f;
+            int tans = 0, rp = p, rf = f, tcs = cs, tcw = cw, t;
             rp -= i * s;
-            cs -= i;
+            tcs -= i;
             tans += i;
 
-            rp -= min(rp/w, cw) * w;
-            cw -= min(rp/w, cw);
-            tans += min(rp/w, cw);
+            t = min(rp/w, tcw);
+            rp -= t * w;
+            tcw -= t;
+            tans += t;
 
+            t = min(rf/s, tcs);
+            rf -= t * s;
+            tcs -= t;
+            tans += t;
 
-            if(s > w){
-                tans += min(rf/w, cw);
-                rf -= min(rf/w, cw) * w;
-                cw -= min(rf/w, cw);
+            t = min(rf/w, tcw);
+            rf -= t * w;
+            tcw -= t;
+            tans += t;
 
-                tans += min(rf/s, cs);
-                rf -= min(rf/s, cs) * s;
-                cs -= min(rf/s, cs);
-            }else{
-                tans += min(rf/s, cs);
-                rf -= min(rf/s, cs) * s;
-                cs -= min(rf/s, cs);
-
-                tans += min(rf/w, cw);
-                rf -= min(rf/w, cw) * w;
-                cs -= min(rf/w, cw);
-
-            }
             ans = max(ans, tans);
         }
         printf("%d\n", ans);
     }
     return 0;
 }
-/*
-
-*/
