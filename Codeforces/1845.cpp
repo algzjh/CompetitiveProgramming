@@ -3,7 +3,7 @@ using namespace std;
 
 int main()
 {
-    freopen("input.in", "r", stdin);
+    // freopen("input.in", "r", stdin);
     ios::sync_with_stdio(false);
     int t;
     cin >> t;
@@ -66,13 +66,11 @@ int main()
                 }
                 else
                 {
-                    cout << n / 2 + 1 << endl;
+                    cout << (n - 3) / 2 + 1 << endl;
                     cout << "3";
                     for (int i = 1; i <= (n - 3) / 2; i++)
                     {
-                        if (i != 1)
-                            cout << " ";
-                        cout << "2";
+                        cout << " 2";
                     }
                     cout << endl;
                 }
